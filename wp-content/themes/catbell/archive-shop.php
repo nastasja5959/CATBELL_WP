@@ -4,9 +4,9 @@
     <nav>
       <ol class="breadcrumbs">
           <li class="breadcrumbs__item"><a href="index.html" class="breadcrumbs__link">ホーム</a></li>
-          <li class="breadcrumbs__item">Eお店を探す</li><!--GitHub確認！-->
+          <li class="breadcrumbs__item">お店を探す</li><!--GitHub確認！-->
       </ol>
-    </nav>
+    </nav>S
     <h2 class="shoplist__title">お店を探す</h2>
 
     <ul class="shoplist__items">
