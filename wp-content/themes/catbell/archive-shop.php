@@ -4,7 +4,7 @@
     <nav>
       <ol class="breadcrumbs">
           <li class="breadcrumbs__item"><a href="index.html" class="breadcrumbs__link">ホーム</a></li>
-          <li class="breadcrumbs__item">Aお店を探す</li><!--GitHub確認！-->
+          <li class="breadcrumbs__item">Bお店を探す</li><!--GitHub確認！-->
       </ol>
     </nav>
     <h2 class="shoplist__title">お店を探す</h2>
