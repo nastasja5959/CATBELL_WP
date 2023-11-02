@@ -2,7 +2,7 @@
   <section class="shoplist inner page-shopList">
 
     <nav>Sf="index.html" class="breadcrumbs__link">ホーム</a></li>
-          <li class="breadcrumbs__item">Bお店を探すにゃん！</li><!--GitHub確認！-->
+          <li class="breadcrumbs__item">Cお店を探すにゃん！</li><!--GitHub確認！-->
       </ol>
     </nav>
     <h2 class="shoplist__title">お店を探す</h2>
