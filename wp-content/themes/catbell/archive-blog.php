@@ -1,0 +1,79 @@
+<?php get_header(); ?>
+    <main class="main cntInner inner">
+    <!-- パンくずリスト -->
+        <nav>
+            <ol class="breadcrumbs">
+                <li class="breadcrumbs__item"><a href="index.html" class="breadcrumbs__link">ホーム</a></li>
+                <li class="breadcrumbs__item">ブログ一覧</li>
+            </ol>
+        </nav>
+    <!-- /パンくずリスト -->
+
+    <!-- top -->
+    <?php if (have_posts()) : ?>
+        <a href="<?php the_permalink(); ?>" class="archive__cardLink">
+            <div class="top__img">
+            <img src="<?php echo get_field('blog_img'); ?>" alt="<?php echo the_title();?>">
+            </div>
+            <div class="top__content">
+                <h2 class="top__ttl"><?php echo the_title(); ?></h2>
+                <div class="top__txt"><?php echo the_content(); ?></div>
+                <div class="top__tagItems">
+                    <?php the_tags('<div class="tag top__tag">','</div><div class="tag top__tag">','</div>'); ?>
+                </div>
+                <span class="date top__date"><?php echo the_time('Y,m,d'); ?></span>
+            </div>
+        </a>
+    <?php endif; ?>
+    <!-- /top -->
+    
+    <!-- content -->
+        <section class="content">
+        <div class="archive">
+            <div class="archive__wrap">
+        
+            <?php if (have_posts()) : ?>
+            <?php while (have_posts()) : the_post(); ?>
+            <?php if (!is_first()) : ?>
+                <div class="archive__card">
+                    <a href="<?php the_permalink(); ?>" class="archive__cardLink">
+                        <div class="archive__cardWrap">
+                            <div class="archive__img">
+                                <img src="<?php echo get_field('blog_img'); ?>" alt="<?php the_title(); ?>">
+                            </div>
+                            <div class="archive__content">
+                                <span class="date"><?php echo the_time('Y,m,d'); ?></span>
+                                <div class="archive__ttl"><?php the_title(); ?></div>
+                                <div class="archive__txt"><?php the_content(); ?></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>    
+                <div class="archive__tagItems">
+                    <?php the_tags('<div class="tag top__tag">','</div><div class="tag top__tag">','</div>'); ?>
+                </div>
+            <?php endif; ?>
+            <?php endwhile; endif; ?>
+            </div>
+        </div>
+            
+        <div class="pager">
+            <ul class="pager__items">
+                <li class="pager__item is-active"><a href="#" class="pager__link">1</a></li>
+                <li class="pager__item"><a href="#" class="pager__link">2</a></li>
+                <li class="pager__item"><a href="#" class="pager__link">3</a></li>
+                <li class="pager__item"><a href="#" class="pager__link">4</a></li>
+                <li class="pager__item"><a href="#" class="pager__link">5</a></li>
+            </ul>
+        </div>
+    </div>
+            
+       <?php get_template_part('_inc/sidebar'); ?>
+
+        </section>
+    <!-- /content -->
+    </main>
+
+    <?php get_footer(); ?>
+</body>
+</html>
