@@ -1,27 +1,4 @@
 <?php get_header(); ?>
-
-<body class="drawer drawer--right">
-  <header class="header header--default js-header">
-    <div class="header__logo">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/home/logo.svg" alt="CAT BELLロゴ画像">
-    </div>
-    <button type="button" class="drawer-toggle drawer-hamburger">
-        <span class="drawer-hamburger-icon"></span>
-    </button>
-    <nav class="header__nav drawer-nav" role="navigation">
-        <ul class="header__list drawer-menu">
-            <li class="header__item">
-                <a href="#" class="drawer-menu-item">ペットを探す</a>
-            </li>
-            <li class="header__item">
-                <a href="#" class="drawer-menu-item">お店を探す</a>
-            </li>
-            <li class="header__item">
-                <a href="#" class="drawer-menu-item">ブログ一覧</a>
-            </li>
-        </ul>
-    </nav>
-</header>
   <section class="catList">
     <div class="catList__inner inner">
       <!-- breadcrumb -->
@@ -42,12 +19,14 @@
       <?php if (have_posts()) : ?>
       <?php while (have_posts()) : the_post(); ?>
         <li class="cat__list">
-
           <a href="#" class="cast__list__img hover">
           <?php foreach (SCF::get('ねこ') as $field_name => $field_value) : ?>
             <?php
             $carousel_thumbnail = wp_get_attachment_image_src($field_value['cat_img'], 'large');
             $carousel_thumbnail = esc_url($carousel_thumbnail[0]);
+            if (!$carousel_thumbnail) {
+              $carousel_thumbnail = 'https://placehold.jp/584x390.png';
+            }
           ?>
             <img src="<?php echo $carousel_thumbnail ?>" alt="<?php echo get_the_title(); ?>">
           <?php break; endforeach; ?>
