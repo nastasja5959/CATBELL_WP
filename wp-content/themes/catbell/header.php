@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
     <script src="<?php echo get_template_directory_uri(); ?>/assets/js/script.js"></script>
+    <!-- WPデフォルトで入っているjQueryを読み込まないようにする -->
+    <?php wp_deregister_script('jquery'); ?>
     <?php wp_head(); ?>
   </head>
 
