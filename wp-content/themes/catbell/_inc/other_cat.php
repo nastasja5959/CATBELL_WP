@@ -23,7 +23,7 @@
               $CountUp--;
             }else { ?>
             <li class="anotherPet__item hover">
-              <a href=<?php echo get_permalink(get_page_by_path('cat_type')->ID); ?><?php echo esc_html($taxonomy->slug); ?>
+            <a href="<?php echo get_permalink( get_page_by_path('cat_type')->ID ); ?><?php echo esc_html($taxonomy->slug); ?>" class="anotherPet__itemLink">
                 <div class="anotherPet__catImg">
                 <img src="<?php echo $photo; ?>" alt="<?php echo esc_html($taxonomy->name); ?>">
                 </div>
