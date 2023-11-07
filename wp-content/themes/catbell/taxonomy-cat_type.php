@@ -84,8 +84,12 @@
             </div>
           </div>
         </li>
-        <?php endwhile; endif; ?>
+        <?php endwhile; ?>
+        <?php else: ?>
+          <p style="font-size: 16px;">該当する猫ちゃん見つかりませんでした</p>
+        <?php endif; ?>
       </ul>
+      
       <!-- pagenation -->
       <?php get_template_part('_inc/pager'); ?>
       <!-- /pagenation -->
