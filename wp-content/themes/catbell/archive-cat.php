@@ -6,7 +6,7 @@
           <ol class="breadcrumbs">
               <li class="breadcrumbs__item"><a href="index.html" class="breadcrumbs__link">ホーム</a></li>
               <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">猫種一覧</a></li>
-              <li class="breadcrumbs__item">アメリカンショートヘア一覧</li>
+              <li class="breadcrumbs__item"><?php single_term_title(); ?></li>
           </ol>
       </nav>
       <!-- /breadcrumb -->

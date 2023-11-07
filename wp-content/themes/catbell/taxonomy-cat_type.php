@@ -6,7 +6,7 @@
           <ol class="breadcrumbs">
               <li class="breadcrumbs__item"><a href="index.html" class="breadcrumbs__link">やりなおすよホーム</a></li>
               <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">猫種一覧</a></li>
-              <li class="breadcrumbs__item">アメリカンショートヘア一覧</li>
+              <li class="breadcrumbs__item"><?php single_term_title(); ?>一覧</li>
           </ol>
       </nav>
       <!-- /breadcrumb -->
@@ -37,7 +37,7 @@
           if ($my_query->have_posts()) : 
           while ($my_query->have_posts()) : $my_query->the_post(); ?>
         <li class="cat__list">
-          <a href="#" class="cast__list__img hover">
+          <a href="<?php the_permalink(); ?>" class="cast__list__img hover">
             <?php foreach (SCF::get('ねこ') as $field_name => $field_value) : ?>
             <?php
               $carousel_thumbnail = wp_get_attachment_image_src($field_value['cat_img'], 'large');
@@ -51,13 +51,13 @@
           </a>
           <div class="cat__list__body">
             <div class="cat__list__head">
-              <div href="#" class="cat__list__label hover">
+              <div class="cat__list__label hover">
                 <?php
                   $post_object = get_field('cat_shop');
                   echo get_the_title($post_object);
                 ?>
               </div>
-              <div href="#" class="cat__list__title"><?php echo the_title(); ?></div>
+              <div class="cat__list__title"><?php echo the_title(); ?></div>
             </div>
             <dl class="cat__list__content">
               <dt>生年月日</dt>
