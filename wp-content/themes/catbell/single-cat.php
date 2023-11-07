@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+
   <section class="single__cat">
     <div class="single__cat__inner inner">
       <!-- breadcrumb -->
@@ -15,11 +16,9 @@
       <div class="single__cat__wrap">
         <div class="single__cat__img">
           <div class="single__cat--mainImg your-class">
-
           <?php 
             $catCountUp = 0;
             foreach (SCF::get('ねこ') as $field_name => $field_value) : 
-          
             $carousel_thumbnail = wp_get_attachment_image_src($field_value['cat_img'], 'large');
             $carousel_thumbnail = esc_url($carousel_thumbnail[0]);
             if (!$carousel_thumbnail) {
@@ -59,7 +58,7 @@
                   メス
                 <?php endif; ?></dd>
             <dt>生体価格</dt>
-            <dd><span class="cat__price"><?php echo get_field('cat_priice'); ?></span>円（税抜）</dd>
+            <dd><span class="cat__price"><?php echo get_field('cat_price'); ?></span>円（税抜）</dd>
             <dt>血統書</dt>
             <dd><?php if(get_field('cat_pedigree') === "men") : ?>
                   あり
@@ -68,7 +67,13 @@
                 <?php endif; ?></dd>
           </dl>
           <div class="single__cat__footer hover">
-            <a href="">アメリカンショートヘア一覧を見る<i class="fas fa-angle-right"></i></a>
+          <?php 
+          $terms = get_the_terms($post->ID, 'cat_type');
+          foreach($terms as $term) {
+            $term_link = get_term_link($term);
+          ?>
+          <a href="<?php echo $term_link; ?>"><?php echo $term->name; ?>一覧を見る<i class="fas fa-angle-right"></i></a>
+          <?php } ?>  
           </div>
         </div>
       </div><!-- /single__cat -->
@@ -105,46 +110,8 @@
         </div>
       </div><!-- /.about__store -->
 
+      <?php get_template_part('_inc/other_cat'); ?>
 
-      <div class="anotherPet__wrap">
-        <div class="anotherPet__inner">
-          <h3 class="catList__title">ほかにもこんな猫種が注目されています！</h3>
-          <ul class="anotherPet__list">
-            <li class="anotherPet__item hover">
-              <a href="anotherPet__itemLink">
-                <div class="anotherPet__catImg">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/typeList/4columns/01.png" alt="">
-                </div>
-                <p class="anotherPet__catName">スコティッシュ<br>フォールド</p>
-              </a>
-            </li>
-            <li class="anotherPet__item hover">
-              <a href="anotherPet__itemLink">
-                <div class="anotherPet__catImg">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/typeList/4columns/03.png" alt="">
-                </div>
-                <p class="anotherPet__catName">メインクイーン</p>
-              </a>
-            </li>
-            <li class="anotherPet__item hover">
-              <a href="anotherPet__itemLink">
-                <div class="anotherPet__catImg">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/typeList/4columns/04.png" alt="">
-                </div>
-                <p class="anotherPet__catName">エキゾチック<br>ショートヘア</p>
-              </a>
-            </li>
-            <li class="anotherPet__item hover">
-              <a href="anotherPet__itemLink">
-                <div class="anotherPet__catImg">
-                  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/typeList/4columns/05.png" alt="">
-                </div>
-                <p class="anotherPet__catName">ラグドール</p>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
       <!-- /.anotherPet__wrap -->
     </div>
   </section>

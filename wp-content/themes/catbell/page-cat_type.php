@@ -21,20 +21,21 @@
 					$taxonomys = get_terms($taxonomy_name);
 					
 					if(!is_wp_error($taxonomys) && count($taxonomys)) :
-					foreach($taxonomys as $taxonomy) :
+					  foreach($taxonomys as $taxonomy) :
 					
-					$term_id = esc_html($taxonomy->term_id);
-					$term_idsp = "cat_type_".$term_id; //タクソノミー名前_ + term_id
-					$photo = get_field('cat_type_img',$term_idsp);
+					    $term_id = esc_html($taxonomy->term_id);
+					    $term_idsp = "cat_type_".$term_id; //タクソノミー名前_ + term_id
+					    $photo = get_field('cat_type_img',$term_idsp);
 				?>
 					<li class="findPet__item">
-						<a href="#" class="findPet__itemLink">
+					  <a href="<?php echo get_permalink(get_page_by_path('cat_type')->ID); ?><?php echo esc_html($taxonomy->slug); ?>">
 							<div class="findPet__catImg">
 								<img src="<?php echo $photo; ?>" alt="<?php echo esc_html($taxonomy->name); ?>">
 							</div>
 							<p class="findPet__catName"><?php echo esc_html($taxonomy->name); ?></p>
 						</a>
 					</li>
+
           <?php endforeach; endif; ?>
 				</ul>
 			</div>
