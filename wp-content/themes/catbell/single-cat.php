@@ -59,7 +59,7 @@
                   メス
                 <?php endif; ?></dd>
             <dt>生体価格</dt>
-            <dd><span class="cat__price"><?php echo get_field('cat_priice'); ?></span>円（税抜）</dd>
+            <dd><span class="cat__price"><?php echo get_field('cat_price'); ?></span>円（税抜）</dd>
             <dt>血統書</dt>
             <dd><?php if(get_field('cat_pedigree') === "men") : ?>
                   あり
