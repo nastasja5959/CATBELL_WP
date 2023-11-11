@@ -79,6 +79,7 @@
 					if ($my_query->have_posts()) :
 						while ($my_query->have_posts()) : $my_query->the_post();
 					?>
+					<a href="<?php the_permalink(); ?>" class="newBlog__card">
 							<div class="newBlog__card">
 								<div class="newBlog__img">
 									<img src="<?php echo get_field('blog_img'); ?>" alt="<?php echo the_title(); ?>">
