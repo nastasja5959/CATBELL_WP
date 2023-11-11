@@ -2,7 +2,10 @@
 
 <!-- main -->
     <main class="main cntInner inner">
+    <!-- パンくずリスト -->
     <?php get_template_part('_inc/breadcrumb'); ?>
+    <!-- パンくずリスト -->
+
     <!-- top -->
         <section>
             <a href="<?php the_permalink(); ?>" class="top__img">

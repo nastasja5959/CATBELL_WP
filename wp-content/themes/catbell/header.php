@@ -19,7 +19,7 @@
     <!-- WPデフォルトで入っているjQueryを読み込まないようにする -->
     <?php wp_deregister_script('jquery'); ?>
     <?php wp_head(); ?>
-  </head>
+</head>
 
 <body class="drawer drawer--right">
     <header class="header header--default js-header">
@@ -32,15 +32,14 @@
         <nav class="header__nav drawer-nav" role="navigation">
             <ul class="header__list drawer-menu">
                 <li class="header__item">
-                    <a href="#" class="drawer-menu-item">ペットを探す</a>
+                    <a href="<?php echo get_permalink(get_page_by_path('cat_type')->ID); ?>" class="drawer-menu-item">ペットを探す</a>
                 </li>
                 <li class="header__item">
-                    <a href="#" class="drawer-menu-item">お店を探す</a>
+                    <a href="<?php echo get_post_type_archive_link('shop'); ?>" class="drawer-menu-item">お店を探す</a>
                 </li>
                 <li class="header__item">
-                    <a href="#" class="drawer-menu-item">ブログ一覧</a>
+                    <a href="<?php echo get_post_type_archive_link('blog'); ?>" class="drawer-menu-item">ブログ一覧</a>
                 </li>
             </ul>
         </nav>
     </header>
-    

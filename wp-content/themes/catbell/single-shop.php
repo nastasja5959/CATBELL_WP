@@ -1,18 +1,14 @@
 <?php get_header(); ?>
 <section class="page-shopDetail">
+
   <div class="mainvisual">
     <div class="mainvisual__img inner">
-      <nav>
-        <ol class="breadcrumbs">
-            <li class="breadcrumbs__item"><a href="index.html" class="breadcrumbs__link">ホーム</a></li>
-            <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">お店を探す</a></li>
-            <li class="breadcrumbs__item">ショップ詳細</li>
-        </ol>
-      </nav>
-      <!-- breadcrumb__inner inner -->
+      <!-- パンくずリスト -->
+      <?php get_template_part('_inc/breadcrumb'); ?>
+      <!-- パンくずリスト -->
       <img src="<?php echo get_field('shop_img'); ?>" alt="<?php the_title(); ?>">
     </div>
-  </div><!-- mainvisual -->
+  </div>
 
   <section class="access">
     <div class="inner">
@@ -32,7 +28,7 @@
         </div><!-- access__text -->
 
         <div class="access__map">
-        <dd><?php echo get_field('shop_map'); ?></dd>
+          <dd><?php echo get_field('shop_map'); ?></dd>
         </div><!-- access__map -->
       </div><!-- access__inner -->
     </div><!-- inner -->
@@ -42,48 +38,58 @@
     <div class="inner">
       <h2 class="section__title"><?php the_title(); ?>の新入りの猫ちゃん</h2>
       <ul class="catlist__items">
-        <li class="catlist__item">
-          <a href="#">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/shopDetail/americanShorthair_01.jpg" alt="">
-            <h3 class="catlist__item__title">アメリカンショートヘア</h3>
-            <dl>
-              <dt>性別</dt>
-              <dd>オス</dd>
-              <dt>生体価格</dt>
-              <dd>368,800 (税抜)</dd>
-            </dl>
-          </a>
-        </li><!-- catlist__item 1-->
+        <?php
+        $taxonomy = 'hand_shop_type';
+        $term_slug = $post->post_name;
+        $args = array(
+          'tax_query' => array(
+            array(
+              'taxonomy' => $taxonomy,
+              'field' => 'slug',
+              'terms' => $term_slug
+            ),
+          ),
+          'post_type' => 'cat', //ポストタイプのスラッグ
+          'order' => 'ASC',
+          'posts_per_page' => 3
+        );
+        $my_query = new WP_Query($args);
 
-        <li class="catlist__item">
-          <a href="#">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/shopDetail/siam.jpg" alt="">
-            <h3 class="catlist__item__title">シャム</h3>
-            <dl>
-              <dt>性別</dt>
-              <dd>メス</dd>
-              <dt>生体価格</dt>
-              <dd>368,800 (税抜)</dd>
-            </dl>
-          </a>
-        </li><!-- catlist__item 2-->
-
-        <li class="catlist__item">
-          <a href="#">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/shopDetail/munchkin.jpeg" alt="">
-            <h3 class="catlist__item__title">マンチカン</h3>
-            <dl>
-              <dt>性別</dt>
-              <dd>オス</dd>
-              <dt>生体価格</dt>
-              <dd>368,800 (税抜)</dd>
-            </dl>
-          </a>
-        </li><!-- catlist__item 3-->
+        if ($my_query->have_posts()) :
+          while ($my_query->have_posts()) : $my_query->the_post();
+        ?>
+            <li class="catlist__item">
+              <a href="<?php echo the_permalink(); ?>">
+                <?php foreach (SCF::get('ねこ') as $field_name => $field_value) : ?>
+                  <?php
+                  $carousel_thumbnail = wp_get_attachment_image_src($field_value['cat_img'], 'large');
+                  $carousel_thumbnail = esc_url($carousel_thumbnail[0]);
+                  ?>
+                  <img src="<?php echo $carousel_thumbnail ?>" alt="<?php echo get_the_title(); ?>">
+                <?php break;
+                endforeach; ?>
+                <h3 class="catlist__item__title"><?php echo get_the_title(); ?></h3>
+                <dl>
+                  <dt>性別</dt>
+                  <dd>
+                    <?php if (get_field('cat_sex') === "men") : ?>
+                      オス
+                    <?php else : ?>
+                      メス
+                    <?php endif; ?>
+                  </dd>
+                  <dt>生体価格</dt>
+                  <dd><span class="cat__price"><?php echo get_field('cat_price') ?></span>円（税抜）</dd>
+                </dl>
+              </a>
+            </li>
+        <?php endwhile;
+        endif;
+        wp_reset_postdata(); ?>
       </ul>
 
       <div class="btn">
-        <a href="#" class="btn__item">この店舗の猫ちゃんを見る</a>
+        <a href="<?php echo get_term_link($term_slug, $taxonomy); ?>" class="btn__item">この店舗の猫ちゃんを見る</a>
       </div><!-- btn__item -->
 
     </div><!-- inner -->
@@ -94,7 +100,7 @@
       <h2 class="section__title">店長よりごあいさつ</h2>
       <div class="concept__inner">
         <div class="concept__left">
-        <img src="<?php echo get_field('shop_manager_img'); ?>" alt="<?php the_title(); ?>">
+          <img src="<?php echo get_field('shop_manager_img'); ?>" alt="<?php echo the_title(); ?>">
         </div><!-- concept__left -->
 
         <div class="concept__right">
@@ -110,49 +116,46 @@
       <h2 class="section__title"><?php the_title(); ?>の最新ブログ</h2>
 
       <ul class="blog__items">
-        <li class="blog__item">
-          <a href="#">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/shopDetail/00.jpg" alt="ブログ記事写真">
-            <div class="blog__item__text">
-              <p class="date">2022.02.24</p>
-              <h3 class="blog__subtitle">猫にまつわるヒーリング効果とは！？プレゼントキャンペーンも実施中♪猫にまつわるヒーリング効果とは！？プレゼントキャンペーンも実施中♪猫にまつわるヒーリング効果とは！？プレゼントキャンペーンも実施中♪猫にまつわるヒーリング効果とは！</h3>
-              <p class="blog__text">人とコミュニケーションをとること、物理的に触れたり、間接的に感じたりすることが、今や遠隔で完結できるようになった。もともと「繋がり」という形を持たない結びつきではあるが、あらゆる物事と実際に接点を持つ場面がが減っている中、生身の身体が受け取る感覚はこれからどんなふうに変わっていくのだろうか。人とコミュニケーションをとること、物理的に触れたり、間接的に感じたりすることが、今や遠隔で完結できるようになった。もともと「繋がり」という形を持たない結びつきではあるが、あらゆる物事と実際に接点を持つ場面がが減っている中、生身の身体が受け取る感覚はこれからどんなふうに変わっていくのだろうか</p>
-              <a class="blog__item__link" href="#">#ヘルスケア</a>
-              <a class="blog__item__link" href="#">#プレゼント</a>
-              <a class="blog__item__link" href="#">#キャンペーン</a>
-            </div><!-- blog__item__text -->
-          </a>
-          </li><!-- blog__item -->
+        <?php
+        $taxonomy = 'input_shop_type';
+        $term_slug = $post->post_name;
+        $args = array(
+          'tax_query' => array(
+            array(
+              'taxonomy' => $taxonomy,
+              'field' => 'slug',
+              'terms' => $term_slug
+            ),
+          ),
+          'post_type' => 'blog', //ポストタイプのスラッグ
+          'order' => 'ASC',
+          'posts_per_page' => 3
+        );
+        $my_query = new WP_Query($args);
 
-        <li class="blog__item">
-          <a href="#">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/shopDetail/01.jpg" alt="ブログ記事写真">
-            <div class="blog__item__text">
-              <p class="date">2022.02.24</p>
-              <h3 class="blog__subtitle">ねこの日★祝！レア種も仲間入り、ふれあいコーナーで癒されて♪ねこの日★祝！レア種も仲間入り、ふれあいコーナーで癒されて♪ねこの日★祝！レア種も仲間入り、ふれあいコーナーで癒されて♪ねこの日★祝！レア種も仲間入り、ふれあいコーナーで癒されて♪</h3>
-              <p class="blog__text">人とコミュニケーションをとること、物理的に触れたり、間接的に感じたりすることが、今や遠隔で完結できるようになった。もともと「繋がり」という形を持たない結びつきではあるが、あらゆる物事と実際に接点を持つ場面がが減っている中、生身の身体が受け取る感覚はこれからどんなふうに変わっていくのだろうか。人とコミュニケーションをとること、物理的に触れたり、間接的に感じたりすることが、今や遠隔で完結できるようになった。もともと「繋がり」という形を持たない結びつきではあるが、あらゆる物事と実際に接点を持つ場面がが減っている中、生身の身体が受け取る感覚はこれからどんなふうに変わっていくのだろうか</p>
-              <a class="blog__item__link" href="#">#ヘルスケア</a>
-              <a class="blog__item__link" href="#">#キャンペーン</a>
-            </div><!-- blog__item__text -->
-          </a>
-        </li><!-- blog__item -->
-
-        <li class="blog__item">
-          <a href="#">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/shopDetail/02.jpg" alt="ブログ記事写真">
-            <div class="blog__item__text">
-              <p class="date">2022.02.24</p>
-              <h3 class="blog__subtitle">【<?php the_title(); ?>】ポイント2倍Day！この機会をお見逃しなく！ポイント2倍Day！この機会をお見逃しなく！ポイント2倍Day！この機会をお見逃しなく！</h3>
-              <p class="blog__text">人とコミュニケーションをとること、物理的に触れたり、間接的に感じたりすることが、今や遠隔で完結できるようになった。もともと「繋がり」という形を持たない結びつきではあるが、あらゆる物事と実際に接点を持つ場面がが減っている中、生身の身体が受け取る感覚はこれからどんなふうに変わっていくのだろうか。人とコミュニケーションをとること、物理的に触れたり、間接的に感じたりすることが、今や遠隔で完結できるようになった。もともと「繋がり」という形を持たない結びつきではあるが、あらゆる物事と実際に接点を持つ場面がが減っている中、生身の身体が受け取る感覚はこれからどんなふうに変わっていくのだろうか</p>
-              <a class="blog__item__link" href="#">#ポイントDay</a>
-              <a class="blog__item__link" href="#">#ヘルスケア</a>
-            </div><!-- blog__item__text -->
-          </a>
-        </li><!-- blog__item -->
+        if ($my_query->have_posts()) :
+          while ($my_query->have_posts()) : $my_query->the_post();
+        ?>
+            <li class="blog__item">
+              <a href="#">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/shopDetail/00.jpg" alt="ブログ記事写真">
+                <div class="blog__item__text">
+                  <p class="date"><?php echo the_time('Y,m,d'); ?></p>
+                  <h3 class="blog__subtitle"><?php echo the_title(); ?></h3>
+                  <div class="blog__text"><?php echo the_content(); ?></div>
+                  <div class="blog__tagItems">
+                    <?php the_tags('<div class="tag top__tag">', '</div><div class="tag top__tag">', '</div>'); ?>
+                  </div>
+                </div><!-- blog__item__text -->
+              </a>
+            </li><!-- blog__item -->
+        <?php endwhile;
+        endif;
+        wp_reset_postdata(); ?>
       </ul><!-- blog__items-->
 
       <div class="btn">
-        <a href="#" class="btn__item">この店舗のブログを見る</a>
+        <a href="<?php echo get_term_link($term_slug, $taxonomy); ?>" class="btn__item">この店舗のブログを見る</a>
       </div><!-- btn__item -->
 
     </div><!-- inner -->
@@ -160,4 +163,5 @@
 </section>
 <?php get_footer(); ?>
 </body>
+
 </html>
